@@ -4,6 +4,7 @@ public class ElevatorController : MonoBehaviour
 {
     public Transform platform;
     public Transform doorLeft, doorRight;
+
     public float doorOpenDistance = 1f;
     public float moveSpeed = 2f;
     public float elevatorHeight = 5f;
@@ -11,9 +12,12 @@ public class ElevatorController : MonoBehaviour
     private Vector3 startPos, endPos;
     private Vector3 doorLeftClosed, doorRightClosed;
     private Vector3 doorLeftOpen, doorRightOpen;
+
     private bool playerInside = false;
     private bool doorsOpened = false;
     private bool movingUp = false;
+    private bool doorClosing = false;
+    private bool doorsClosed = false;
 
     void Start()
     {
@@ -41,7 +45,7 @@ public class ElevatorController : MonoBehaviour
 
         if (movingUp)
         {
-            platform.position = Vector3.MoveTowards(platform.position, endPos, moveSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(platform.position, endPos, moveSpeed * Time.deltaTime);
 
             if (Vector3.Distance(platform.position, endPos) < 0.01f)
             {
@@ -78,7 +82,6 @@ public class ElevatorController : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Player entered elevator trigger");
             playerInside = true;
         }
     }
